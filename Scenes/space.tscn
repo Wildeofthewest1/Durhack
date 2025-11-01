@@ -4,12 +4,15 @@
 
 [node name="Space" type="Node"]
 
-[node name="Planet" parent="." instance=ExtResource("1_0ll74")]
+[node name="Star" parent="." node_paths=PackedStringArray("orbital_parent") groups=["Star"] instance=ExtResource("1_0ll74")]
 position = Vector2(883, 540)
+orbital_parent = NodePath(".")
 
-[node name="Planet2" parent="." instance=ExtResource("1_0ll74")]
-position = Vector2(1354.0001, 493.00003)
-scale = Vector2(0.385, 0.385)
-mass = 10.0
-initial_speed = 150
+[node name="Planet2" parent="." node_paths=PackedStringArray("orbital_parent") instance=ExtResource("1_0ll74")]
+position = Vector2(1111, 530)
+scale = Vector2(0.11, 0.11)
+mass = 1.0
+initial_speed = 300
 initial_direction = Vector2(0, -1)
+autoorbit = true
+orbital_parent = NodePath("../Star")
