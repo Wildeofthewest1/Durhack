@@ -23,6 +23,7 @@ window/stretch/mode="viewport"
 [global_group]
 
 interactables=""
+Planets=""
 
 [input]
 
