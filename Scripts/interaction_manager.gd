@@ -20,7 +20,7 @@ func _ready() -> void:
 	
 	set_process(true)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if not player:
 		return
 	
