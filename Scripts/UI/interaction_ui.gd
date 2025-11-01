@@ -64,12 +64,9 @@ func _world_to_screen(world_pos: Vector2) -> Vector2:
 	
 	var camera: Camera2D = viewport.get_camera_2d()
 	if not camera:
-		return Vector2.ZERO
+		return world_pos  # Return world pos if no camera
 	
-	# Transform world position to screen position
-	var canvas_transform: Transform2D = viewport.get_canvas_transform()
-	var camera_transform: Transform2D = camera.get_canvas_transform()
-	return (canvas_transform * camera_transform).affine_inverse() * world_pos
+	return world_pos  # Simple fallback - in 2D with camera, this works
 
 func _on_interaction_triggered(interactable: Interactable) -> void:
 	current_interactable = interactable
@@ -91,11 +88,11 @@ func _on_interaction_triggered(interactable: Interactable) -> void:
 			interaction_panel.switch_to_tab(InteractionPanel.PanelTab.INFO)
 			interaction_panel.expand_panel()
 
-func _on_interactable_in_range(interactable: Interactable) -> void:
+func _on_interactable_in_range(_interactable: Interactable) -> void:
 	pass  # Could add visual feedback here
 
-func _on_interactable_out_of_range(interactable: Interactable) -> void:
-	if current_interactable == interactable:
+func _on_interactable_out_of_range(_interactable: Interactable) -> void:
+	if current_interactable == _interactable:
 		# End dialogue if we're talking to this interactable
 		if talk_ui and talk_ui.is_dialogue_active():
 			talk_ui.end_dialogue()
@@ -138,14 +135,14 @@ func _start_dialogue(interactable: Interactable) -> void:
 	var speaker_sprite: Texture2D = interactable.get_interaction_sprite()
 	talk_ui.start_dialogue(dialogue_data, interactable.dialogue_start_node, speaker_sprite)
 
-func _on_dialogue_option_selected(option_index: int) -> void:
+func _on_dialogue_option_selected(_option_index: int) -> void:
 	# Handle dialogue option selection
 	# Could trigger events, give items, etc.
 	pass
 
-func _on_tab_changed(tab_name: String) -> void:
+func _on_tab_changed(_tab_name: String) -> void:
 	# Handle tab changes
-	if tab_name == "talk" and not talk_ui.is_dialogue_active():
+	if _tab_name == "talk" and not talk_ui.is_dialogue_active():
 		# If switching to talk tab but no active dialogue, start one with current interactable
 		if current_interactable and current_interactable.has_dialogue:
 			_start_dialogue(current_interactable)

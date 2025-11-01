@@ -15,3 +15,17 @@ func _physics_process(delta: float) -> void:
 	# Apply movement
 	velocity = direction * speed
 	move_and_slide()
+	
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed:
+		if event.keycode == KEY_E:
+			print("Player: E pressed!")
+			var manager: InteractionManager = $"InteractionManager"
+			if manager:
+				print("Player: Found manager")
+				var closest: Interactable = manager.get_closest_interactable()
+				if closest:
+					print("Player: Found interactable, triggering!")
+					manager.trigger_interaction(closest)
+				else:
+					print("Player: No closest interactable")

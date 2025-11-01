@@ -516,7 +516,7 @@ func _refresh_inventory_grid() -> void:
 func _on_hotbar_slot_pressed(slot_index: int) -> void:
 	use_hotbar_item(slot_index)
 
-func _on_inventory_slot_pressed(slot_index: int) -> void:
+func _on_inventory_slot_pressed(_slot_index: int) -> void:
 	# Could implement drag to hotbar here
 	pass
 
