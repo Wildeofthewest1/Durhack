@@ -23,33 +23,19 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="MainContainer" type="HBoxContainer" parent="MarginContainer"]
-layout_mode = 2
-
-[node name="SpriteContainer" type="VBoxContainer" parent="MarginContainer/MainContainer"]
-custom_minimum_size = Vector2(100, 0)
-layout_mode = 2
-
-[node name="SpeakerSprite" type="TextureRect" parent="MarginContainer/MainContainer/SpriteContainer"]
-custom_minimum_size = Vector2(100, 100)
-layout_mode = 2
-size_flags_vertical = 0
-expand_mode = 1
-stretch_mode = 5
-
-[node name="DialogueContainer" type="VBoxContainer" parent="MarginContainer/MainContainer"]
+[node name="DialogueContainer" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="SpeakerName" type="Label" parent="MarginContainer/MainContainer/DialogueContainer"]
+[node name="SpeakerName" type="Label" parent="MarginContainer/DialogueContainer"]
 layout_mode = 2
 text = "Speaker Name"
 horizontal_alignment = 1
 
-[node name="HSeparator" type="HSeparator" parent="MarginContainer/MainContainer/DialogueContainer"]
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/DialogueContainer"]
 layout_mode = 2
 
-[node name="DialogueText" type="RichTextLabel" parent="MarginContainer/MainContainer/DialogueContainer"]
+[node name="DialogueText" type="RichTextLabel" parent="MarginContainer/DialogueContainer"]
 custom_minimum_size = Vector2(0, 150)
 layout_mode = 2
 size_flags_vertical = 3
@@ -57,8 +43,8 @@ bbcode_enabled = true
 text = "Dialogue text will appear here with a typing effect."
 fit_content = true
 
-[node name="HSeparator2" type="HSeparator" parent="MarginContainer/MainContainer/DialogueContainer"]
+[node name="HSeparator2" type="HSeparator" parent="MarginContainer/DialogueContainer"]
 layout_mode = 2
 
-[node name="OptionsContainer" type="VBoxContainer" parent="MarginContainer/MainContainer/DialogueContainer"]
+[node name="OptionsContainer" type="VBoxContainer" parent="MarginContainer/DialogueContainer"]
 layout_mode = 2

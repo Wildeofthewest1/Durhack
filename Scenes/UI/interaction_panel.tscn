@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dwoicfo2rmhxr"]
 
 [ext_resource type="Script" uid="uid://btd4nli2261er" path="res://Scripts/UI/interaction_panel.gd" id="1"]
-[ext_resource type="PackedScene" path="res://Scenes/UI/player_ui.tscn" id="2_vftfo"]
+[ext_resource type="PackedScene" uid="uid://c5shtx1ajh2sd" path="res://Scenes/UI/player_ui.tscn" id="2_vftfo"]
 [ext_resource type="PackedScene" uid="uid://bqu664g0qo4y8" path="res://Scenes/UI/talk_ui.tscn" id="3_u0ni2"]
 
 [node name="InteractionPanel" type="Control"]
@@ -72,7 +72,6 @@ grow_vertical = 2
 layout_mode = 1
 
 [node name="TalkContent" type="Control" parent="PanelContainer/MarginContainer/ContentContainer"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -84,7 +83,6 @@ grow_vertical = 2
 layout_mode = 1
 
 [node name="InfoContent" type="Control" parent="PanelContainer/MarginContainer/ContentContainer"]
-visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
