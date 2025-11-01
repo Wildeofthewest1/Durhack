@@ -19,7 +19,7 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	# 1) Build total acceleration
-	
+	var a_total = Vector2(0,0)
 	# Thrust toward mouse while RMB held
 	if Input.is_action_pressed("thrust_mouse"):
 		var mouse_world: Vector2 = get_global_mouse_position()
@@ -36,13 +36,10 @@ func _physics_process(delta: float) -> void:
 	if speed > max_speed and speed > 0.0:
 		velocity = (velocity / speed) * max_speed
 	
-	# 4) Round velocity to reduce subpixel movement
-	velocity = velocity
 	# 5) Move
 	move_and_slide()
 	
 	# 6) Snap to pixel grid to prevent ghosting
-	global_position = global_position.round()
 	
 	# 7) Face velocity
 	if rotate_with_motion and velocity.length() > 0.001:

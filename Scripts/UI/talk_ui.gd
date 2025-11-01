@@ -120,7 +120,7 @@ func _on_dialogue_started() -> void:
 func _on_dialogue_ended() -> void:
 	visible = false
 
-func _on_node_changed(node_id: String) -> void:
+func _on_node_changed(_node_id: String) -> void:
 	_display_current_node()
 
 func _input(event: InputEvent) -> void:

@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://player_ui_001"]
+[gd_scene load_steps=2 format=3 uid="uid://c5shtx1ajh2sd"]
 
-[ext_resource type="Script" path="res://Scripts/UI/player_ui.gd" id="1"]
+[ext_resource type="Script" uid="uid://bhtf130qwj501" path="res://Scripts/UI/player_ui.gd" id="1"]
 
 [node name="PlayerUI" type="Control"]
 layout_mode = 3
