@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://bsykg4j3q21dw" path="res://Scripts/player.gd" id="1_6t5aa"]
 [ext_resource type="Script" uid="uid://b4r0vjwt5v1pe" path="res://Scripts/UI/Minimap/minimap_tracked_object.gd" id="1_v0iea"]
 [ext_resource type="Texture2D" uid="uid://bkdflhjhco4e5" path="res://Assets/player_and_others.png" id="2_cvnsp"]
-[ext_resource type="Script" uid="uid://d28f1auty7m8h" path="res://Scripts/trail.gd" id="4_vgqql"]
+[ext_resource type="PackedScene" uid="uid://iow6shlx8o0w" path="res://Scenes/trail.tscn" id="4_vgqql"]
 
 [node name="Player" type="CharacterBody2D" groups=["player"]]
 motion_mode = 1
@@ -23,6 +23,5 @@ texture = ExtResource("2_cvnsp")
 region_enabled = true
 region_rect = Rect2(224, 4, 96, 172)
 
-[node name="Trail" type="Line2D" parent="."]
-script = ExtResource("4_vgqql")
+[node name="Trail" parent="." instance=ExtResource("4_vgqql")]
 body_path = NodePath("..")
