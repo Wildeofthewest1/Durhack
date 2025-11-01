@@ -11,10 +11,16 @@ class_name InteractionUI
 
 @onready var interaction_prompt: Label = $InteractionPrompt
 @onready var minimap_container: Control = $MinimapContainer
+@onready var speaker_portrait: TextureRect = $SpeakerPortrait
 
 var current_interactable: Interactable = null
+var stored_dialogue_data: Dictionary = {}  # Store dialogue for persistence
+var stored_speaker_texture: Texture2D = null
 
 func _ready() -> void:
+	# Add to group so other nodes can find us
+	add_to_group("interaction_ui")
+	
 	# Connect interaction manager signals
 	if interaction_manager:
 		interaction_manager.interaction_triggered.connect(_on_interaction_triggered)
@@ -24,6 +30,7 @@ func _ready() -> void:
 	# Connect panel signals
 	if interaction_panel:
 		interaction_panel.tab_changed.connect(_on_tab_changed)
+		interaction_panel.panel_closed.connect(_on_panel_manually_closed)
 	
 	# Connect talk UI signals
 	if talk_ui:
@@ -69,6 +76,7 @@ func _world_to_screen(world_pos: Vector2) -> Vector2:
 	return world_pos  # Simple fallback - in 2D with camera, this works
 
 func _on_interaction_triggered(interactable: Interactable) -> void:
+	print("InteractionUI: Interaction triggered with ", interactable.interaction_name)
 	current_interactable = interactable
 	
 	# Update info panel with interactable information
@@ -76,10 +84,13 @@ func _on_interaction_triggered(interactable: Interactable) -> void:
 	
 	# Switch to appropriate tab based on interactable type
 	var interactable_type: String = interactable.get_interactable_type()
+	print("  Interactable type: ", interactable_type)
+	print("  Has dialogue: ", interactable.has_dialogue)
 	
 	if interactable.has_dialogue:
 		# Switch to talk tab and start dialogue
 		if interaction_panel:
+			print("  Switching to TALK tab")
 			interaction_panel.switch_to_tab(InteractionPanel.PanelTab.TALK)
 		_start_dialogue(interactable)
 	else:
@@ -92,11 +103,27 @@ func _on_interactable_in_range(_interactable: Interactable) -> void:
 	pass  # Could add visual feedback here
 
 func _on_interactable_out_of_range(_interactable: Interactable) -> void:
-	if current_interactable == _interactable:
-		# End dialogue if we're talking to this interactable
-		if talk_ui and talk_ui.is_dialogue_active():
-			talk_ui.end_dialogue()
-		current_interactable = null
+	# Don't end interaction if we're actively interacting
+	# Let the player manually close with Tab or finish dialogue
+	pass  # Removed auto-close behavior
+
+func _on_panel_manually_closed() -> void:
+	# When player closes panel with Tab, clean up
+	if talk_ui and talk_ui.is_dialogue_active():
+		talk_ui.end_dialogue()
+	
+	if speaker_portrait:
+		speaker_portrait.visible = false
+	
+	# Clear stored dialogue data
+	stored_dialogue_data.clear()
+	stored_speaker_texture = null
+	
+	# Allow interaction manager to reset
+	if interaction_manager:
+		interaction_manager.is_interacting = false
+	
+	current_interactable = null
 
 func _update_info_panel(interactable: Interactable) -> void:
 	if not info_label:
@@ -115,12 +142,16 @@ func _update_info_panel(interactable: Interactable) -> void:
 	info_label.text = info_text
 
 func _start_dialogue(interactable: Interactable) -> void:
+	print("InteractionUI: Starting dialogue with ", interactable.interaction_name)
+	
 	if not talk_ui:
+		print("  ERROR: talk_ui is null!")
 		return
 	
 	var dialogue_data: Dictionary = interactable.get_dialogue_data()
 	
 	if dialogue_data.is_empty():
+		print("  Creating default dialogue")
 		# Create a default dialogue
 		dialogue_data = {
 			"start": {
@@ -131,9 +162,26 @@ func _start_dialogue(interactable: Interactable) -> void:
 				]
 			}
 		}
+	else:
+		print("  Using interactable dialogue data with ", dialogue_data.size(), " nodes")
+	
+	# Store dialogue data so it persists
+	stored_dialogue_data = dialogue_data.duplicate(true)
+	stored_speaker_texture = interactable.get_interaction_sprite()
 	
 	var speaker_sprite: Texture2D = interactable.get_interaction_sprite()
-	talk_ui.start_dialogue(dialogue_data, interactable.dialogue_start_node, speaker_sprite)
+	
+	# Show speaker portrait on left side of screen
+	if speaker_portrait and speaker_sprite:
+		speaker_portrait.texture = speaker_sprite
+		speaker_portrait.visible = true
+		print("  Speaker portrait shown")
+	elif speaker_portrait:
+		speaker_portrait.visible = false
+		print("  No speaker sprite")
+	
+	print("  Calling talk_ui.start_dialogue()")
+	talk_ui.start_dialogue(dialogue_data, interactable.dialogue_start_node, null)  # Don't pass sprite to talk_ui anymore
 
 func _on_dialogue_option_selected(_option_index: int) -> void:
 	# Handle dialogue option selection
@@ -142,10 +190,14 @@ func _on_dialogue_option_selected(_option_index: int) -> void:
 
 func _on_tab_changed(_tab_name: String) -> void:
 	# Handle tab changes
-	if _tab_name == "talk" and not talk_ui.is_dialogue_active():
-		# If switching to talk tab but no active dialogue, start one with current interactable
-		if current_interactable and current_interactable.has_dialogue:
-			_start_dialogue(current_interactable)
+	if _tab_name == "talk":
+		# If switching to talk tab, restore dialogue if we have stored data
+		if not talk_ui.is_dialogue_active() and not stored_dialogue_data.is_empty():
+			# Restore the dialogue
+			if speaker_portrait and stored_speaker_texture:
+				speaker_portrait.texture = stored_speaker_texture
+				speaker_portrait.visible = true
+			talk_ui.start_dialogue(stored_dialogue_data, "start", null)
 
 # Public API
 
@@ -172,6 +224,26 @@ func add_upgrade(upgrade: Dictionary) -> void:
 func add_fleet_ship(ship: Dictionary) -> void:
 	if player_ui:
 		player_ui.add_fleet_ship(ship)
+
+func add_planet(planet: Dictionary) -> void:
+	if player_ui:
+		player_ui.add_planet(planet)
+
+func remove_planet(index: int) -> void:
+	if player_ui:
+		player_ui.remove_planet(index)
+
+func add_shop_item(item: Dictionary) -> void:
+	if player_ui:
+		player_ui.add_shop_item(item)
+
+func remove_shop_item(item_id: String) -> void:
+	if player_ui:
+		player_ui.remove_shop_item(item_id)
+
+func clear_shop() -> void:
+	if player_ui:
+		player_ui.clear_shop()
 
 func set_player_stats(name: String, level: int, credits: int) -> void:
 	if player_ui:

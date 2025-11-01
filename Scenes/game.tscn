@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://dcbvpreahnt2f" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://83ansfhhkj23" path="res://Scenes/game.gd" id="1_wowpa"]
 [ext_resource type="Script" uid="uid://hwswi5bhrqxx" path="res://Scripts/camera/subpixelcamera.gd" id="2_qxrlw"]
-[ext_resource type="Script" uid="uid://iupmyhogtxop" path="res://Scenes/enemy_spawner.gd" id="4_3dryh"]
+[ext_resource type="Script" path="res://Scenes/enemy_spawner.gd" id="4_3dryh"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3dryh"]
 bg_color = Color(1, 1, 1, 1)
