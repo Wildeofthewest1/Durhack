@@ -1,7 +1,7 @@
 # DEBUG SCRIPT - Attach this to your Main node temporarily
 extends Node2D
 
-@onready var interaction_manager: InteractionManager = $InteractionManager
+@onready var interaction_manager: InteractionManager = $Player/InteractionManager
 @onready var player: CharacterBody2D = $Player
 
 func _ready() -> void:

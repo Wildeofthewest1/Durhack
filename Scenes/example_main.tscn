@@ -35,4 +35,5 @@ player = NodePath("..")
 [node name="ExampleStation" parent="." instance=ExtResource("3")]
 position = Vector2(800, 324)
 
-[node name="InteractionUI" parent="." instance=ExtResource("1")]
+[node name="InteractionUI" parent="." node_paths=PackedStringArray("interaction_manager") instance=ExtResource("1")]
+interaction_manager = NodePath("../Player/InteractionManager")
