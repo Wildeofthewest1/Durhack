@@ -1,11 +1,12 @@
 [gd_scene load_steps=3 format=3 uid="uid://i4hxnr3vdbch"]
 
 [ext_resource type="PackedScene" uid="uid://dxn1fw8iaskrw" path="res://Scenes/planet.tscn" id="1_0ll74"]
-[ext_resource type="PackedScene" uid="uid://dp671k4hbthh5" path="res://Scenes/space_station.tscn" id="2_p3ued"]
+[ext_resource type="Script" uid="uid://bqwocjokj8s4b" path="res://Scenes/camera_2d_debug.gd" id="2_wnfdr"]
 
 [node name="Space" type="Node"]
 
 [node name="Star System" type="Node2D" parent="."]
+position = Vector2(-886, -540)
 
 [node name="Star" parent="Star System" node_paths=PackedStringArray("parent_star") groups=["Star"] instance=ExtResource("1_0ll74")]
 modulate = Color(0.9, 0.79499996, 0, 1)
@@ -43,10 +44,13 @@ parent_star = NodePath("../Star")
 parent_planet = NodePath("../Planet2")
 
 [node name="Planet3" parent="Star System" node_paths=PackedStringArray("parent_star") instance=ExtResource("1_0ll74")]
+modulate = Color(7.2196127e-07, 0.6905073, 0.30647963, 1)
+position = Vector2(-1031, 1672.9999)
+mass = 1.5
+autoorbit = true
 parent_star = NodePath("../Star")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(885, 557)
-zoom = Vector2(0.395, 0.395)
-
-[node name="Space Station" parent="." instance=ExtResource("2_p3ued")]
+position = Vector2(-3, 0)
+zoom = Vector2(0.3, 0.3)
+script = ExtResource("2_wnfdr")
