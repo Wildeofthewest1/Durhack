@@ -10,6 +10,10 @@ config_version=5
 
 [application]
 
-config/name="Durhack"
-config/features=PackedStringArray("4.5", "Forward Plus")
-config/icon="res://icon.svg"
+config/name="400 (Durhack)"
+config/features=PackedStringArray("4.5", "GL Compatibility")
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"

@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwju5ceubg651"]
+
+[ext_resource type="Shader" uid="uid://y0v7jiddm837" path="res://Shaders/subpixel.gdshader" id="1_jjgbg"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bo1nx"]
+shader = ExtResource("1_jjgbg")
+shader_parameter/cam_offset = Vector2(0, 0)
+
+[node name="Main" type="Node2D"]
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+material = SubResource("ShaderMaterial_bo1nx")
+offset_right = 40.0
+offset_bottom = 40.0
+scale = Vector2(4, 4)
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(482, 372)
+render_target_update_mode = 4

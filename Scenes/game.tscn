@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://dytxm3igl8nvq"]
+
+[ext_resource type="PackedScene" uid="uid://dcbvpreahnt2f" path="res://Scenes/player.tscn" id="1_ebmjs"]
+[ext_resource type="Script" uid="uid://hwswi5bhrqxx" path="res://Scripts/camera/subpixelcamera.gd" id="2_qxrlw"]
+
+[node name="Game" type="Node2D"]
+
+[node name="PlayerContainer" type="Node2D" parent="."]
+
+[node name="Player" parent="PlayerContainer" instance=ExtResource("1_ebmjs")]
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Environment" type="Node2D" parent="."]
+
+[node name="Bodies" type="Node2D" parent="Environment"]
+
+[node name="Systems" type="Node2D" parent="."]
+
+[node name="Other" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("2_qxrlw")
