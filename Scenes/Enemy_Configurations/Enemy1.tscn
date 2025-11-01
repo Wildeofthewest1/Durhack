@@ -18,6 +18,7 @@ region_rect = Rect2(138.90848, 5.918166, 23.164536, 13.175374)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_iyo2w")
+disabled = true
 
 [node name="WeaponSlots" type="Node2D" parent="."]
 
@@ -33,3 +34,8 @@ position = Vector2(-10, 4)
 script = ExtResource("3_nk1mc")
 dot_shape = 2
 dot_color = Color(0.9823325, 0, 0.04619918, 1)
+
+[node name="VisionCone" type="Area2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="VisionCone"]
+polygon = PackedVector2Array(0, 0, 100, 200, -100, 200)
