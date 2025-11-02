@@ -6,7 +6,21 @@ var current_enemy_index: int = 0
 
 func _ready() -> void:
 	print("Game script ready")
+	var spawner = $PlanetSpawner
+	spawner.spawn_planet(
+		Vector2(0, 30),     # position
+		Vector2(0, 0),      # velocity
+		10000,                # mass
+		10                   # radius
+	)
+	spawner.spawn_planet(
+		Vector2(0, -30),     # position
+		Vector2(0, 0),      # velocity
+		10000,                # mass
+		10                   # radius
+	)
 
+	
 func _on_spawn_enemy_button_pressed() -> void:
 	var player = $PlayerContainer/Player
 	var spawner = $EnemySpawner
