@@ -33,5 +33,6 @@ shape = SubResource("CircleShape2D_mamsb")
 [node name="MinimapTracker" type="Node2D" parent="." node_paths=PackedStringArray("target_node")]
 script = ExtResource("4_e4ico")
 target_node = NodePath("..")
+dot_shape = 1
 dot_size = 5.0
 dot_color = Color(0.4117647, 0.75686276, 0.81960785, 1)
