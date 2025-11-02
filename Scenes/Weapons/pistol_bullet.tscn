@@ -7,9 +7,9 @@
 radius = 3.0
 height = 10.0
 
-[node name="pistol_bullet" type="CharacterBody2D"]
-collision_layer = 16
-collision_mask = 0
+[node name="pistol_bullet" type="CharacterBody2D" groups=["Enemy"]]
+collision_layer = 4
+collision_mask = 2
 motion_mode = 1
 script = ExtResource("1_26nlb")
 life_time = 0.2
