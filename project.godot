@@ -30,6 +30,7 @@ window/stretch/mode="viewport"
 interactables=""
 Planets=""
 InteractUI=""
+EnemySpawner=""
 
 [input]
 
