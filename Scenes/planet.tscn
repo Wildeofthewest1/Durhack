@@ -18,3 +18,9 @@ texture = ExtResource("2_a75xc")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 visible = false
 shape = SubResource("CircleShape2D_x6khl")
+
+[node name="CPUParticles2D" type="CPUParticles2D" parent="."]
+lifetime = 2.4799999999999995
+gravity = Vector2(0, 0)
+scale_amount_min = 6.0
+scale_amount_max = 6.0

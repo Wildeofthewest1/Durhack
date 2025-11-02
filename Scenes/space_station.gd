@@ -1,3 +1,4 @@
+#Space Station
 extends CharacterBody2D
 
 #Custom Intial Conditions
@@ -6,29 +7,25 @@ extends CharacterBody2D
 
 @export var autoorbit = true
 @export var parent_planet: CharacterBody2D #Add planetary moons 
-var gravity_scale = 5e2
+var gravity_scale = 7e2
 
 func _ready():
 	if not autoorbit:
 		velocity = initial_speed * initial_direction
-	#if autoorbit:
-		#var direction = (position - parent_planet.global_position)
-		#var planet_speed = parent_planet.velocity
-		#var speed = (60 * parent_planet.mass * gravity_scale/direction.length())**(0.5)
-		#velocity = speed * direction.normalized().orthogonal() + planet_speed
+	if autoorbit:
+		var direction = (position - parent_planet.global_position)
+		var planet_speed = parent_planet.velocity
+		var speed = (60 * parent_planet.mass * gravity_scale/direction.length())**(0.5)
+		velocity = speed * direction.normalized().orthogonal() + planet_speed
 
 
 func _process(_delta: float) -> void:
 	#print(name, " ", (position - orbital_parent.position).length())
-	if not is_in_group("Star"):
-		#print((position - parent_star.position).length())
-		#print(velocity.length())
-		pass
 	pass
 	
 func _physics_process(delta: float) -> void:
 	move_and_slide()
-	#force_g()
+	force_g()
 
 func force_g():
 	var direction_g = global_position - parent_planet.global_position
