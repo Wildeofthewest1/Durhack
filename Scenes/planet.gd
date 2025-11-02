@@ -1,9 +1,11 @@
 extends CharacterBody2D
 
 @export var mass = 10.00
-
+@export var radius = 1.00
 @export var initial_speed = 0
 @export var initial_direction = Vector2.ZERO 
+
+
 
 
 @export var autoorbit = false
@@ -14,6 +16,10 @@ var gravity_scale = 100
 var g_limit = mass*5
 
 func _ready():
+	#set planet size
+	scale = radius * scale
+	
+	
 	if not autoorbit:
 		velocity = initial_speed * initial_direction
 	if autoorbit:
