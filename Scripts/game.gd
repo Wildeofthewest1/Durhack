@@ -1,7 +1,7 @@
 extends Node2D
 
 # Track which enemy to spawn next
-var enemy_types = ["Enemy1", "Enemy2", "Enemy3", "Enemy4"]
+var enemy_types = ["Enemy1", "Enemy2", "Enemy3", "Enemy4", "Mothership1"]
 var current_enemy_index: int = 0
 
 func _ready() -> void:

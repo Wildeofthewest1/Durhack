@@ -6,7 +6,8 @@ extends Node2D
 	"Enemy1": "res://Scenes/Enemy_Configurations/Enemy1.tscn",
 	"Enemy2": "res://Scenes/Enemy_Configurations/Enemy2.tscn",
 	"Enemy3": "res://Scenes/Enemy_Configurations/Enemy3.tscn",
-	"Enemy4": "res://Scenes/Enemy_Configurations/Enemy4.tscn"
+	"Enemy4": "res://Scenes/Enemy_Configurations/Enemy4.tscn",
+	"Mothership1": "res://Scenes/Enemy_Configurations/Mothership1.tscn"
 }
 
 func spawn_enemy(
