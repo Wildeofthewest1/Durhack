@@ -12,7 +12,7 @@ extends Node2D
 func spawn_enemy(
 	enemy_type: String,
 	position: Vector2,
-	behaviour_type: String = "default",
+	behaviour_type: String = "ranged",
 	weapons: Array = [],
 	speed: float = 100.0,
 	health: int = 100
