@@ -41,6 +41,7 @@ script = ExtResource("1_v0iea")
 target_node = NodePath("..")
 
 [node name="Sprite" type="Sprite2D" parent="."]
+z_index = 5
 texture_filter = 1
 material = ExtResource("3_f1ek2")
 rotation = -1.5707964
@@ -50,6 +51,7 @@ region_enabled = true
 region_rect = Rect2(224, 4, 96, 172)
 
 [node name="Trail" parent="." instance=ExtResource("4_vgqql")]
+z_index = 4
 material = ExtResource("3_f1ek2")
 body_path = NodePath("..")
 color = Color(1, 1, 1, 1)
@@ -61,6 +63,7 @@ weapon_scene = ExtResource("6_3smsa")
 [node name="WeaponSocket" type="Marker2D" parent="WeaponManager"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player"]]
+z_index = 5
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_f1ek2")
 
