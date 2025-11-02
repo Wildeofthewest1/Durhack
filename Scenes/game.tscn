@@ -1,11 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://cuqp3vdnbus2n"]
+[gd_scene load_steps=13 format=3 uid="uid://cuqp3vdnbus2n"]
 
 [ext_resource type="PackedScene" uid="uid://dcbvpreahnt2f" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://83ansfhhkj23" path="res://Scripts/game.gd" id="1_wowpa"]
+[ext_resource type="Script" uid="uid://cb05i3ko56emi" path="res://Scenes/star_background.gd" id="2_ldgsr"]
 [ext_resource type="Script" uid="uid://hwswi5bhrqxx" path="res://Scripts/camera/subpixelcamera.gd" id="2_qxrlw"]
 [ext_resource type="Script" uid="uid://iupmyhogtxop" path="res://Scripts/enemy_spawner.gd" id="4_3dryh"]
 [ext_resource type="Script" uid="uid://iwtk8qqhqf41" path="res://Scenes/Bodies/PlanetSpawner.gd" id="4_wowpa"]
+[ext_resource type="PackedScene" uid="uid://b48kj3f1ysx00" path="res://Scenes/Satellite/satellite_3.tscn" id="6_h4fw4"]
 [ext_resource type="PackedScene" uid="uid://cu2xh3q6htkyi" path="res://Scenes/Satellite/satellite_2.tscn" id="6_i6g32"]
+[ext_resource type="PackedScene" uid="uid://cqpdodt668rju" path="res://Scenes/Satellite/satellite_4.tscn" id="7_o5yvi"]
+[ext_resource type="PackedScene" uid="uid://cbwgac5vnc7eu" path="res://Scenes/Satellite/satellite_5.tscn" id="7_rku1e"]
+[ext_resource type="PackedScene" uid="uid://dvdupc2fvp8lg" path="res://Scenes/Satellite/satellite_1.tscn" id="7_v158k"]
+[ext_resource type="Resource" path="res://Data/dialogue_wanne_be_rebellion_leader.tres" id="8_h4fw4"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_wowpa")
@@ -13,6 +19,11 @@ script = ExtResource("1_wowpa")
 [node name="Environment" type="Node2D" parent="."]
 
 [node name="Bodies" type="Node2D" parent="Environment"]
+
+[node name="StarBackground" type="Node2D" parent="Environment"]
+script = ExtResource("2_ldgsr")
+star_colors = Array[Color]([Color(0.26666668, 0.25490198, 0.34901962, 1), Color(0.28235295, 0.27058825, 0.36862746, 1), Color(1, 0.9, 0.7, 0.8), Color(0.40392157, 0.39215687, 0.45882353, 1)])
+stars_per_layer = 1000
 
 [node name="Systems" type="Node2D" parent="."]
 
@@ -34,5 +45,18 @@ thrust_accel = 100.0
 
 [node name="Enemies" type="Node2D" parent="."]
 
+[node name="Satellite_5" parent="." instance=ExtResource("7_rku1e")]
+position = Vector2(-1030, -1230)
+
+[node name="Satellite_4" parent="." instance=ExtResource("7_o5yvi")]
+position = Vector2(1495, 1765)
+
+[node name="Satellite_3" parent="." instance=ExtResource("6_h4fw4")]
+position = Vector2(-1243, 1677)
+
 [node name="Satellite_1" parent="." instance=ExtResource("6_i6g32")]
 position = Vector2(172, 9)
+
+[node name="Satellite_2" parent="." instance=ExtResource("7_v158k")]
+position = Vector2(3037, 481)
+dialogue_data = ExtResource("8_h4fw4")
