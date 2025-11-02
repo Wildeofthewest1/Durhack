@@ -24,3 +24,4 @@ stats = SubResource("Resource_uvlpi")
 [node name="InteractibleNPCExample" parent="." instance=ExtResource("4_j31pt")]
 
 [node name="Satellite_1" parent="." instance=ExtResource("5_5x78k")]
+position = Vector2(279, 0)

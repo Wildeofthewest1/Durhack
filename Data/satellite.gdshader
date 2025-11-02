@@ -1,18 +1,14 @@
 shader_type canvas_item;
 render_mode blend_mix;
-
 // Colors
 uniform vec3 base_color: source_color = vec3(0.8, 0.85, 0.9);
 uniform vec3 highlight_color: source_color = vec3(1.0, 1.0, 1.0);
 uniform vec3 shadow_color: source_color = vec3(0.3, 0.35, 0.4);
-
 // Metallic parameters
 uniform float metallic_strength: hint_range(0.0, 1.0) = 0.9;
 uniform float highlight_sharpness: hint_range(0.1, 8.0) = 3.0;
-
 // Animation
 uniform float time_scale: hint_range(0.0, 2.0) = 0.5;
-
 void fragment() {
 	// UV-based procedural highlight pattern (pixel-art friendly)
 	vec2 uv = UV * 4.0;
@@ -35,5 +31,6 @@ void fragment() {
 	vec3 with_metallic = mix(base, highlight_color, metallic_factor * metallic_strength);
 	vec3 final_color = with_metallic + edge_glow * highlight_color;
 	
-	COLOR = vec4(final_color, 1.0);
+	vec4 tex_color = texture(TEXTURE, UV);
+	COLOR = vec4(final_color, tex_color.a);
 }
