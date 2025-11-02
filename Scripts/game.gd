@@ -61,6 +61,7 @@ func _ready() -> void:
 	}
 # Loop through and spawn each one
 	for name in planets.keys():
+		print("spawnksjdfhnblsakjdhflksahjdflkshdf")
 		var p = planets[name]
 		spawner.spawn_planet(
 			p["position"],
@@ -84,8 +85,8 @@ func _ready() -> void:
 		"Enemy1": {
 			"type": "Enemy1",
 			"position": Vector2(-800, 400),
-			"behaviour": "ranged",
-			"weapons": ["res://Scenes/Enemy_Weapons/pistol.tscn"],
+			"behaviour": "mothership",
+			"weapons": ["res://Scenes/Enemy_Weapons/Pistol.tscn"],
 			"speed": 150,
 			"health": 80,
 			"rotate_toward_player": true,
@@ -93,19 +94,19 @@ func _ready() -> void:
 		},
 		"Enemy2": {
 			"type": "Enemy2",
-			"position": Vector2(-1000, 200),
-			"behaviour": "ranged",
+			"position": Vector2(0, 0),
+			"behaviour": "mothership",
 			"weapons": ["res://Scenes/Enemy_Weapons/Pistol.tscn"],
 			"speed": 120,
-			"health": 100,
+			"health": 1,
 			"rotate_toward_player": true,
 			"detectionradius": 500
 		},
 		"Enemy3": {
 			"type": "Enemy3",
 			"position": Vector2(-1000, 200),
-			"behaviour": "ranged",
-			"weapons": ["res://Scenes/Enemy_Weapons/pistol.tscn"],
+			"behaviour": "mothership",
+			"weapons": ["res://Scenes/Enemy_Weapons/Shotgun.tscn"],
 			"speed": 100,
 			"health": 200,
 			"rotate_toward_player": true,
@@ -146,8 +147,8 @@ func _on_spawn_enemy_button_pressed() -> void:
 	spawner.spawn_enemy(
 		enemy_type,
 		spawn_position,
-		"ranged",
-		["res://Scenes/Enemy_Weapons/Pistol.tscn"],
+		"mothership",
+		["res://Scenes/Enemy_Weapons/Shotgun.tscn"],
 		150.0,
 		120,
 		false,
