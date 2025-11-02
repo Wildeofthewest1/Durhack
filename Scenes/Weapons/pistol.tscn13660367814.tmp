@@ -1,14 +1,12 @@
-[gd_scene load_steps=4 format=3 uid="uid://bn7b88avijxj"]
+[gd_scene load_steps=3 format=3 uid="uid://bn7b88avijxj"]
 
 [ext_resource type="Script" uid="uid://ceyinrly14k5j" path="res://Scripts/Weapons/pistol.gd" id="1_aq3ds"]
-[ext_resource type="Resource" uid="uid://bd2v11whj7dpa" path="res://Data/pistol.tres" id="2_0qusy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_njh1v"]
 
 [node name="pistol" type="Node2D"]
 position = Vector2(1, 0)
 script = ExtResource("1_aq3ds")
-data = ExtResource("2_0qusy")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 visible = false

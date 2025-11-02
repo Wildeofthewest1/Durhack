@@ -1,6 +1,6 @@
 extends WeaponBase
 
-@export var bullet_scene: PackedScene = preload("res://weapons/twin_bullet.tscn")
+@export var bullet_scene: PackedScene = preload("res://Scenes/weapons/twin_bullet.tscn")
 
 # Firing mode
 @export var fire_both_at_once: bool = false

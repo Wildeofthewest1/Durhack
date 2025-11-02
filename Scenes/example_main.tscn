@@ -38,9 +38,8 @@ shape = SubResource("RectangleShape2D_1")
 script = ExtResource("2")
 player = NodePath("..")
 
-[node name="MinimapTracker" type="Node2D" parent="Player" node_paths=PackedStringArray("target_node")]
+[node name="MinimapTracker" type="Node2D" parent="Player"]
 script = ExtResource("4_bt0ug")
-target_node = NodePath("")
 
 [node name="Sprite" type="Sprite2D" parent="Player"]
 texture_filter = 1

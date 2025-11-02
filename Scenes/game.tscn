@@ -1,9 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://cuqp3vdnbus2n"]
+[gd_scene load_steps=8 format=3 uid="uid://cuqp3vdnbus2n"]
 
 [ext_resource type="PackedScene" uid="uid://dcbvpreahnt2f" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://83ansfhhkj23" path="res://Scripts/game.gd" id="1_wowpa"]
 [ext_resource type="Script" uid="uid://hwswi5bhrqxx" path="res://Scripts/camera/subpixelcamera.gd" id="2_qxrlw"]
+[ext_resource type="PackedScene" uid="uid://clohd2wj4g0jq" path="res://Scenes/interactible_npc_example.tscn" id="3_wowpa"]
 [ext_resource type="Script" uid="uid://iupmyhogtxop" path="res://Scripts/enemy_spawner.gd" id="4_3dryh"]
+[ext_resource type="PackedScene" uid="uid://lyol4qhr8xkl" path="res://Scenes/Fleet/fleet_1.tscn" id="6_i6g32"]
+[ext_resource type="PackedScene" uid="uid://blelx7tsviryj" path="res://Scenes/Fleet/fleet_2.tscn" id="7_1l0tm"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_wowpa")
@@ -12,13 +15,14 @@ script = ExtResource("1_wowpa")
 
 [node name="Player" parent="PlayerContainer" instance=ExtResource("1_ebmjs")]
 thrust_accel = 100.0
-max_speed = 300.0
 
 [node name="Enemies" type="Node2D" parent="."]
 
 [node name="Environment" type="Node2D" parent="."]
 
 [node name="Bodies" type="Node2D" parent="Environment"]
+
+[node name="InteractibleNPCExample" parent="Environment" instance=ExtResource("3_wowpa")]
 
 [node name="Systems" type="Node2D" parent="."]
 
@@ -29,3 +33,11 @@ script = ExtResource("2_qxrlw")
 
 [node name="EnemySpawner" type="Node2D" parent="."]
 script = ExtResource("4_3dryh")
+
+[node name="Fleet_1" parent="." node_paths=PackedStringArray("follow_body") instance=ExtResource("6_i6g32")]
+position = Vector2(-64, -106)
+follow_body = NodePath("../PlayerContainer/Player")
+
+[node name="Fleet_2" parent="." node_paths=PackedStringArray("follow_body") instance=ExtResource("7_1l0tm")]
+position = Vector2(116, -129)
+follow_body = NodePath("../PlayerContainer/Player")

@@ -3,7 +3,7 @@
 [ext_resource type="Shader" uid="uid://y0v7jiddm837" path="res://Shaders/subpixel.gdshader" id="1_jjgbg"]
 [ext_resource type="PackedScene" uid="uid://cuqp3vdnbus2n" path="res://Scenes/game.tscn" id="2_bo1nx"]
 [ext_resource type="Script" uid="uid://bjtbfx4gunmwy" path="res://Scripts/UI/Minimap/canvas_control.gd" id="3_8gbba"]
-[ext_resource type="PackedScene" uid="uid://rp1733dafbo0" path="res://Scenes/InteractionUI.tscn" id="4_jjvhh"]
+[ext_resource type="Script" uid="uid://c3c421urpfyr2" path="res://Scenes/InteractionUI.gd" id="4_jjvhh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bo1nx"]
 shader = ExtResource("1_jjgbg")
@@ -39,18 +39,11 @@ offset_bottom = 108.0
 theme_override_styles/normal = SubResource("StyleBoxFlat_8gbba")
 metadata/_edit_use_anchors_ = true
 
-[node name="InteractionUI" parent="CanvasLayer" instance=ExtResource("4_jjvhh")]
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -320.0
-offset_right = 280.0
-grow_horizontal = 0
-grow_vertical = 2
-hidden_x = 500.0
-shown_x = -300.0
-panel_bg_color = Color(0.38340002, 0.40167004, 0.54, 1)
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("4_jjvhh")
 
 [connection signal="pressed" from="CanvasLayer/SpawnEnemyButton" to="SubViewportContainer/SubViewport/Game" method="_on_spawn_enemy_button_pressed"]

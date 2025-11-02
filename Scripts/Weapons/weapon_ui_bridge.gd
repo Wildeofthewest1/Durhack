@@ -10,14 +10,30 @@ class_name WeaponUIBridge
 var weapon_data_cache: Dictionary = {}  # id -> WeaponData
 
 func _ready():
+	# Use call_deferred to ensure everything is initialized
+	call_deferred("_initialize")
+
+func _initialize():
 	if not weapon_manager:
 		weapon_manager = get_parent().get_node_or_null("WeaponManager")
 	
 	if not interaction_ui:
 		interaction_ui = get_node_or_null("/root/Main/InteractionUI")
+		if not interaction_ui:
+			# Try alternative paths
+			interaction_ui = get_tree().get_first_node_in_group("interaction_ui")
 	
-	if not weapon_manager or not interaction_ui:
-		push_error("WeaponUIBridge: Missing weapon_manager or interaction_ui!")
+	if not weapon_manager:
+		push_error("WeaponUIBridge: weapon_manager not found! Check export or path.")
+		return
+	
+	if not interaction_ui:
+		push_error("WeaponUIBridge: interaction_ui not found! Make sure InteractionUI exists.")
+		return
+	
+	# Make sure player_ui exists
+	if not interaction_ui.player_ui:
+		push_error("WeaponUIBridge: interaction_ui.player_ui is null!")
 		return
 	
 	# Connect UI signals
@@ -27,7 +43,10 @@ func _ready():
 	weapon_manager.slot_changed.connect(_on_weapon_manager_slot_changed)
 	weapon_manager.inventory_changed.connect(_on_weapon_manager_inventory_changed)
 	
-	print("WeaponUIBridge: Connected!")
+	print("WeaponUIBridge: Successfully connected!")
+	print("  WeaponManager: ", weapon_manager)
+	print("  InteractionUI: ", interaction_ui)
+	print("  PlayerUI: ", interaction_ui.player_ui)
 
 # ========================================
 # FROM UI TO WEAPONMANAGER
@@ -73,6 +92,10 @@ func _on_weapon_manager_inventory_changed():
 func add_weapon_to_ui(weapon_data: WeaponData, weapon_id: String = ""):
 	"""Add a weapon to the UI's available weapons list"""
 	
+	if not interaction_ui or not interaction_ui.player_ui:
+		push_error("WeaponUIBridge: Cannot add weapon - UI not initialized!")
+		return
+	
 	# Generate ID if not provided
 	if weapon_id.is_empty():
 		weapon_id = weapon_data.display_name.to_lower().replace(" ", "_")
@@ -99,6 +122,10 @@ func add_weapon_to_ui(weapon_data: WeaponData, weapon_id: String = ""):
 
 func add_weapon_to_shop(weapon_data: WeaponData, price: int, weapon_id: String = ""):
 	"""Add a weapon to the shop"""
+	
+	if not interaction_ui or not interaction_ui.player_ui:
+		push_error("WeaponUIBridge: Cannot add to shop - UI not initialized!")
+		return
 	
 	if weapon_id.is_empty():
 		weapon_id = weapon_data.display_name.to_lower().replace(" ", "_")
