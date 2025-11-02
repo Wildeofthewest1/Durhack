@@ -34,7 +34,8 @@ func assign_behaviour() -> void:
 func attach_weapons() -> void:
 	# ⚠️ Weapon scenes must be .tscn files, not .gd
 	var weapon_scenes = [
-		preload("res://Scenes/Enemy_Weapons/pistol.tscn")
+		preload("res://Scenes/Enemy_Weapons/pistol.tscn"),
+		preload("res://Scenes/Enemy_Weapons/shotgun.tscn")
 	]
 
 	if not has_node("WeaponSlots"):
