@@ -1,12 +1,20 @@
+<<<<<<< HEAD
 [gd_scene load_steps=8 format=3 uid="uid://cuqp3vdnbus2n"]
+=======
+[gd_scene load_steps=6 format=3 uid="uid://cuqp3vdnbus2n"]
+>>>>>>> af7b5b8a37436e4ed90ca5bacee0c72f4771df0a
 
 [ext_resource type="PackedScene" uid="uid://dcbvpreahnt2f" path="res://Scenes/player.tscn" id="1_ebmjs"]
 [ext_resource type="Script" uid="uid://83ansfhhkj23" path="res://Scripts/game.gd" id="1_wowpa"]
 [ext_resource type="Script" uid="uid://hwswi5bhrqxx" path="res://Scripts/camera/subpixelcamera.gd" id="2_qxrlw"]
 [ext_resource type="PackedScene" uid="uid://clohd2wj4g0jq" path="res://Scenes/interactible_npc_example.tscn" id="3_wowpa"]
 [ext_resource type="Script" uid="uid://iupmyhogtxop" path="res://Scripts/enemy_spawner.gd" id="4_3dryh"]
+<<<<<<< HEAD
 [ext_resource type="PackedScene" uid="uid://lyol4qhr8xkl" path="res://Scenes/Fleet/fleet_1.tscn" id="6_i6g32"]
 [ext_resource type="PackedScene" uid="uid://blelx7tsviryj" path="res://Scenes/Fleet/fleet_2.tscn" id="7_1l0tm"]
+=======
+[ext_resource type="Script" uid="uid://iwtk8qqhqf41" path="res://Scenes/node_2d.gd" id="5_wowpa"]
+>>>>>>> af7b5b8a37436e4ed90ca5bacee0c72f4771df0a
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_wowpa")
@@ -34,6 +42,7 @@ script = ExtResource("2_qxrlw")
 [node name="EnemySpawner" type="Node2D" parent="."]
 script = ExtResource("4_3dryh")
 
+<<<<<<< HEAD
 [node name="Fleet_1" parent="." node_paths=PackedStringArray("follow_body") instance=ExtResource("6_i6g32")]
 position = Vector2(-64, -106)
 follow_body = NodePath("../PlayerContainer/Player")
@@ -41,3 +50,9 @@ follow_body = NodePath("../PlayerContainer/Player")
 [node name="Fleet_2" parent="." node_paths=PackedStringArray("follow_body") instance=ExtResource("7_1l0tm")]
 position = Vector2(116, -129)
 follow_body = NodePath("../PlayerContainer/Player")
+=======
+[node name="PlanetSpawner" type="Node2D" parent="."]
+script = ExtResource("5_wowpa")
+
+[node name="PlanetGravityManager" type="Node2D" parent="."]
+>>>>>>> af7b5b8a37436e4ed90ca5bacee0c72f4771df0a

@@ -5,6 +5,14 @@ extends Node2D
 @export var rotation_speed: float = 1.0  # how fast the weapon rotates
 @export var vision_cone_path: NodePath = "../../VisionCone"  # points to Enemy/VisionCone
 
+# 🔹 Shotgun-specific settings
+@export var pellet_count: int = 6           # Number of pellets per shot
+@export var spread_angle_deg: float = 30  # Total spread (degrees)
+@export var pellet_speed_variance: float = 0.2  # Optional random speed variance (10%)
+
+@export var pellet_deceleration: float = 300
+@export var pellet_lifetime: float = 1
+
 var target: Node2D = null
 var can_fire: bool = false
 var owner_enemy: Node2D
@@ -13,8 +21,6 @@ var owner_enemy: Node2D
 @onready var cone: Area2D = get_node_or_null(vision_cone_path)
 
 func _ready() -> void:
-	print("🔫 Pistol ready:", name)
-
 	if cone == null:
 		push_error("❌ Could not find VisionCone at path: " + str(vision_cone_path))
 	else:
@@ -32,7 +38,7 @@ func _physics_process(delta: float) -> void:
 		var dir = (target.global_position - global_position).normalized()
 		var desired_angle = dir.angle()
 
-		# 🔹 Rotate pistol toward player (+90° sprite offset)
+		# 🔹 Rotate shotgun toward player (+90° sprite offset)
 		global_rotation = lerp_angle(global_rotation, desired_angle - deg_to_rad(90), delta * rotation_speed)
 	else:
 		# 🔹 No target → smoothly rotate back to match enemy’s rotation
@@ -45,43 +51,60 @@ func _physics_process(delta: float) -> void:
 
 
 func _on_cone_body_entered(body: Node) -> void:
-	print("👁️ Body entered cone:", body.name)
 	if body.is_in_group("player"):
 		target = body
 		can_fire = true
-		print("🎯 Target acquired:", target.name)
 		timer.start()
 
 
 func _on_cone_body_exited(body: Node) -> void:
-	print("🚪 Body exited cone:", body.name)
 	if body == target:
-		print("❌ Lost target:", target.name)
 		target = null
 		can_fire = false
 
 
 func _on_fire_timer_timeout() -> void:
 	if can_fire and target and is_instance_valid(target):
-		print("💥 Timer fired: Shooting at", target.name)
-		_fire_bullet()
+		_fire_shotgun_blast()
 
 
-func _fire_bullet() -> void:
+func _fire_shotgun_blast() -> void:
 	if bullet_scene == null:
-		push_error("❌ No bullet scene assigned to pistol!")
+		push_error("❌ No bullet scene assigned to shotgun!")
 		return
 
-	var bullet = bullet_scene.instantiate()
+	var half_spread := deg_to_rad(spread_angle_deg / 2.0)
+	var spawn_origin: Vector2 = global_position
+	var spawn_rotation: float = global_rotation
 
-	# 🔹 Spawn bullet at the pistol’s *local* position
-	bullet.position = position  # local to parent (Weapons)
-	bullet.rotation = global_rotation  # keep world-facing rotation
+	print("🔫 Firing from", name, "at", spawn_origin)
 
-	# Add bullet to same parent as pistol (so it spawns in correct local space)
-	get_parent().add_child(bullet)
+	for i in range(pellet_count):
+		var bullet := bullet_scene.instantiate()
+		
+		if "lifetime" in bullet:
+			bullet.lifetime = pellet_lifetime
+			
+		var speed_factor := randf_range(1.0 - pellet_speed_variance, 1.0 + pellet_speed_variance)
+		if "initial_speed" in bullet:
+			bullet.initial_speed *= speed_factor
 
-	# 🔹 Set bullet movement direction in world space
-	bullet.direction = Vector2.RIGHT.rotated(global_rotation + deg_to_rad(90))
+		# 🔹 Apply deceleration for shotgun pellets
+		if "deceleration" in bullet:
+			bullet.deceleration = pellet_deceleration
+		
+		# 🔹 Add bullet under the shotgun
+		add_child(bullet)
 
-	print("🔸 Spawned bullet from", name, "at local pos:", position, "global rot:", global_rotation)
+		# 🔹 Set bullet position/rotation in world space
+		bullet.position = spawn_origin
+		bullet.global_rotation = spawn_rotation
+
+		# 🔹 Prevent bullet from following shotgun rotation or movement
+		bullet.top_level = true
+
+		# 🔹 Add random spread for shotgun effect
+		var random_offset := randf_range(-half_spread, half_spread)
+		bullet.direction = Vector2.RIGHT.rotated(spawn_rotation + deg_to_rad(90) + random_offset)
+		
+	print("💥 Shotgun blast fired", pellet_count, "pellets from", name)
