@@ -22,10 +22,18 @@ func initialize_projectile(dir: Vector2, speed: float, dmg: float) -> void:
 		rotation = _velocity_vec.angle()
 
 func _physics_process(delta: float) -> void:
-	# move the bullet according to its stored velocity
-	velocity = _velocity_vec
-	move_and_slide()
-
+	# move the bullet and detect collision
+	var collision = move_and_collide(_velocity_vec * delta)
+	
+	if collision:
+		var target = collision.get_collider()
+		if target and target.is_in_group("Enemy"):
+			if target.has_method("take_damage"):
+				target.take_damage(_damage)
+		_spawn_explosion()
+		queue_free()
+		return
+	
 	# rotate sprite so it always faces where it's actually going
 	if _velocity_vec.length() > 0.0:
 		global_rotation = _velocity_vec.angle()
@@ -35,8 +43,6 @@ func _physics_process(delta: float) -> void:
 	if _life_timer <= 0.0:
 		_spawn_explosion()
 		queue_free()
-
-	# TODO: collision, damage application, etc.
 
 func _spawn_explosion() -> void:
 	if explosion == null:

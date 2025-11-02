@@ -26,6 +26,26 @@ func _ready() -> void:
 	assign_behaviour()
 	attach_weapons()
 
+func take_damage(amount: int) -> void:
+	health -= amount
+	print("%s took %d damage, remaining health: %d" % [name, amount, health])
+
+	if has_node("Sprite2D"):
+		var sprite: Sprite2D = $Sprite2D
+		_flash_red(sprite)
+
+	if health <= 0:
+		die()
+
+func _flash_red(sprite: Sprite2D) -> void:
+	var tween = create_tween()
+	tween.tween_property(sprite, "modulate", Color(1, 0, 0), 0.05)
+	tween.tween_property(sprite, "modulate", Color(1, 1, 1), 0.1)
+
+
+func die() -> void:
+	print("%s has died" % name)
+	queue_free()
 
 func assign_behaviour() -> void:
 	var behaviour_paths = {
@@ -48,7 +68,8 @@ func assign_behaviour() -> void:
 
 func attach_weapons() -> void:
 	var weapon_scenes = [
-		preload("res://Scenes/Enemy_Weapons/pistol.tscn")
+		preload("res://Scenes/Enemy_Weapons/Pistol.tscn"),
+		preload("res://Scenes/Enemy_Weapons/Shotgun.tscn")
 	]
 
 	if not has_node("WeaponSlots"):
@@ -81,8 +102,8 @@ func _physics_process(delta: float) -> void:
 	if behaviour:
 		behaviour.update(delta)
 	
-	if not faceplayer:
-		_check_escort_status()
+	#if not faceplayer:
+	#	_check_escort_status()
 
 
 func _spawn_escort() -> void:
@@ -101,11 +122,11 @@ func _spawn_escort() -> void:
 		escort_type,                            # enemy_type
 		spawn_position,                         # position
 		"ranged",                               # behaviour_type
-		["res://Scenes/Enemy_Weapons/Pistol.tscn"], # weapons
+		["res://Scenes/Enemy_Weapons/Shotgun.tscn"], # weapons
 		150.0,                                  # speed
 		120,                                    # health
 		true,                                   # rotate_toward_player
-		100                                     # detectionradius
+		500                                     # detectionradius
 	)
 
 		
