@@ -8,6 +8,8 @@
 radius = 7.0
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
+collision_layer = 2
+collision_mask = 2
 script = ExtResource("1_ow0xe")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -18,7 +20,6 @@ region_rect = Rect2(138.90848, 5.918166, 23.164536, 13.175374)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_iyo2w")
-disabled = true
 
 [node name="WeaponSlots" type="Node2D" parent="."]
 

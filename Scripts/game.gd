@@ -1,7 +1,7 @@
 extends Node2D
 
 # Track which enemy to spawn next
-var enemy_types = ["Enemy1", "Enemy2", "Enemy3"]
+var enemy_types = ["Enemy1", "Enemy2", "Enemy3", "Enemy4"]
 var current_enemy_index: int = 0
 
 func _ready() -> void:
@@ -28,7 +28,7 @@ func _on_spawn_enemy_button_pressed() -> void:
 		enemy_type,
 		spawn_position,
 		"ranged",
-		["res://Scenes/Enemy_Weapons/pistol.tscn"],
+		["res://Scenes/Enemy_Weapons/shotgun.tscn"],
 		150.0,
 		120
 	)
