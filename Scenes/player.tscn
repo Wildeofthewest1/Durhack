@@ -25,6 +25,7 @@ initial_velocity = Vector2(100, 0)
 gravity_multiplier = 5.0
 thrust_accel = 5000.0
 max_speed = 300.0
+rotate_with_motion = false
 thrust = NodePath("thrust")
 
 [node name="Area2D" type="Area2D" parent="."]

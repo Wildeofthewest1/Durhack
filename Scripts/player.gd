@@ -1,14 +1,11 @@
 extends CharacterBody2D
 
-
-
 @onready var planets = get_tree().get_nodes_in_group("Planets") #calls the group with planets
 func force_g():
 	for i in range(len(planets)):
 		var direction_g = (global_position - planets[i].global_position)
 		velocity -= (direction_g.normalized() 
 						* planets[i].mass * 3e4/direction_g.length()**2)
-
 
 @export var initial_velocity: Vector2 = Vector2.ZERO
 @export var gravity_multiplier: float = 1.0
@@ -33,7 +30,6 @@ func _ready() -> void:
 func _physics_process(delta: float) -> void:
 	# 1) Build total acceleration
 	var a_total = Vector2.ZERO
-
 	# --- Gravity toward all planets ---
 	for planet in get_tree().get_nodes_in_group("Planets"):
 		if not "mass" in planet or not "radius" in planet:
@@ -74,8 +70,12 @@ func _physics_process(delta: float) -> void:
 
 	# 4) Move
 	move_and_slide()
-
+	
 	# 5) Rotate with motion
 	if rotate_with_motion and velocity.length() > 0.001:
 		rotation = velocity.angle() + deg_to_rad(rotate_offset_deg)
+	else:
+		self.look_at(get_global_mouse_position())
+
 	force_g()
+	
