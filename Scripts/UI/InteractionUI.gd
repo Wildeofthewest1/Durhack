@@ -34,6 +34,10 @@ class_name InteractionUI
 @export var shown_x: float = 0.0
 @export var tween_time: float = 0.18
 
+@export var fast_scale: =1.0
+@export var slow_scale: =0.2
+var _target:float = 0.2
+
 # portrait anim settings
 @export var portrait_fade_time: float = 0.15
 
@@ -109,6 +113,12 @@ func close_ui() -> void:
 func is_open() -> bool:
 	return _open
 
+func _physics_process(delta: float) -> void:
+	if _open:
+		_target = slow_scale
+	else:
+		_target = fast_scale
+	Engine.time_scale = lerp(Engine.time_scale, _target, 1.0 - pow(0.001, delta))
 
 # =====================================================================
 # PORTRAIT HANDLING
