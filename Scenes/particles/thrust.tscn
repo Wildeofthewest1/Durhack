@@ -38,7 +38,7 @@ turbulence_noise_strength = 0.5
 turbulence_noise_scale = 7.0
 
 [node name="thrust" type="GPUParticles2D"]
-z_index = -1
+z_index = 4
 amount = 100
 texture = ExtResource("1_qm23y")
 lifetime = 0.25
