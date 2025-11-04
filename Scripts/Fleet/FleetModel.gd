@@ -10,7 +10,7 @@ class_name DroneFollower
 @export var rotation_speed: float = 6.0
 @export var drone_name: String = "Drone"
 
-@export var health: int = 10000
+@export var health: int = 200
 @export var respawn_delay: float = 5.0         # ⏱ seconds before respawn
 
 var _orbit_angle: float = 0.0
@@ -42,28 +42,13 @@ func _flash_red(sprite: Sprite2D) -> void:
 
 
 func die() -> void:
-	print("%s has died — respawning in %.1f seconds" % [name, respawn_delay])
+	print("%s has died" % name)
 
-	# Unregister from the fleet before removal
 	FleetManager.unregister_drone(self)
-
-	# Store respawn info before freeing
-	var respawn_position := global_position
-	var follow_target := follow_body
-	var drone_scene := preload("res://Scenes/Fleet/fleet_1.tscn")
-
-	# Schedule respawn
-	var timer := get_tree().create_timer(respawn_delay)
-	timer.timeout.connect(func():
-		if not is_instance_valid(FleetManager):
-			return
-		var new_drone = drone_scene.instantiate()
-		new_drone.global_position = respawn_position
-		new_drone.follow_body = follow_target
-		get_tree().get_root().get_node("Game/Fleet").add_child(new_drone)
-	)
+	FleetManager.respawn_drone(global_position, follow_body, 5.0)
 
 	queue_free()
+
 
 
 func attach_weapons() -> void:

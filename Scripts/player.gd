@@ -20,13 +20,13 @@ var a_total: Vector2 = Vector2.ZERO
 
 @export var thrust: GPUParticles2D
 
-@export var health: int = 10000
+@export var health: int = 200
 
 func _ready() -> void:
 	print("[Player] ready")
 	velocity = initial_velocity
 	motion_mode = CharacterBody2D.MOTION_MODE_FLOATING
-	up_direction = Vector2.ZERO
+	up_direction = Vector2.RIGHT
 
 func take_damage(amount: int) -> void:
 	health -= amount

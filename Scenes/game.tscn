@@ -65,10 +65,12 @@ position = Vector2(172, 9)
 position = Vector2(3037, 481)
 dialogue_data = ExtResource("8_h4fw4")
 
-[node name="Fleet_1" parent="." node_paths=PackedStringArray("follow_body") instance=ExtResource("13_1phco")]
-position = Vector2(365.64313, -189.91794)
-follow_body = NodePath("../PlayerContainer/Player")
+[node name="Fleet" type="Node2D" parent="."]
 
-[node name="Fleet_2" parent="." node_paths=PackedStringArray("follow_body") instance=ExtResource("14_nb51f")]
+[node name="Fleet_1" parent="Fleet" node_paths=PackedStringArray("follow_body") instance=ExtResource("13_1phco")]
 position = Vector2(365.64313, -189.91794)
-follow_body = NodePath("../PlayerContainer/Player")
+follow_body = NodePath("../../PlayerContainer/Player")
+
+[node name="Fleet_2" parent="Fleet" node_paths=PackedStringArray("follow_body") instance=ExtResource("14_nb51f")]
+position = Vector2(365.64313, -189.91794)
+follow_body = NodePath("../../PlayerContainer/Player")
