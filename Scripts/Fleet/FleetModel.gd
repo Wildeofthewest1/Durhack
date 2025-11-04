@@ -10,12 +10,60 @@ class_name DroneFollower
 @export var rotation_speed: float = 6.0        # rotation smoothing
 @export var drone_name: String = "Drone"
 
+@export var health: int = 100
+
 var _orbit_angle: float = 0.0
 var _prev_position: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	FleetManager.register_drone(self)
 	_prev_position = global_position
+	attach_weapons()
+
+
+func take_damage(amount: int) -> void:
+	health -= amount
+	print("%s took %d damage, remaining health: %d" % [name, amount, health])
+
+	if has_node("Sprite2D"):
+		var sprite: Sprite2D = $Sprite2D
+		_flash_red(sprite)
+
+	if health <= 0:
+		die()
+
+func _flash_red(sprite: Sprite2D) -> void:
+	var tween = create_tween()
+	tween.tween_property(sprite, "modulate", Color(1, 0, 0), 0.05)
+	tween.tween_property(sprite, "modulate", Color(1, 1, 1), 0.1)
+
+func die() -> void:
+	print("%s has died" % name)
+	queue_free()
+	
+func attach_weapons() -> void:
+	var weapon_scenes = [
+		preload("res://Scenes/Enemy_Weapons/Shotgun.tscn")
+	]
+
+	if not has_node("WeaponSlots"):
+		push_warning("Fleet has no WeaponSlots node: " + str(name))
+		return
+
+	var weapon_slots = $WeaponSlots.get_children()
+
+	if not has_node("Weapons"):
+		var weapons_node = Node2D.new()
+		weapons_node.name = "Weapons"
+		add_child(weapons_node)
+
+	for i in range(weapon_slots.size()):
+		var weapon_scene = weapon_scenes[i % weapon_scenes.size()]
+		var weapon = weapon_scene.instantiate()
+
+		weapon.position = weapon_slots[i].position
+		#weapon.owner_enemy = self
+		$Weapons.add_child(weapon)
 
 func _physics_process(delta: float) -> void:
 	if follow_body == null:
