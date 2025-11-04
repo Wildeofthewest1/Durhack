@@ -53,7 +53,7 @@ func _fire_projectile(dir: Vector2) -> void:
 	var proj: Node2D = bullet_scene.instantiate() as Node2D
 
 	# 2. add bullet to world root (current scene), not as a child of the gun
-	var world_root: Node = get_parent().get_parent().get_parent()
+	var world_root: Node = get_parent().get_parent().get_parent().get_parent()
 	world_root.add_child(proj)
 
 	# 3. set bullet position and orientation

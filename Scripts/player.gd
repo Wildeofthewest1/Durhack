@@ -99,6 +99,4 @@ func _physics_process(delta: float) -> void:
 		rotation = velocity.angle() + deg_to_rad(rotate_offset_deg)
 	else:
 		self.look_at(get_global_mouse_position())
-
-	force_g()
 	
