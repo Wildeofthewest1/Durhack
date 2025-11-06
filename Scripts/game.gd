@@ -7,6 +7,10 @@ var current_enemy_index: int = 0
 # Store reusable data
 var enemies = {}
 
+@onready var spawn_timer: Timer = Timer.new()
+var enemy_count := 0
+const MAX_ENEMIES := 50
+
 func _ready() -> void:
 	print("Game script ready")
 	var spawner = $PlanetSpawner
@@ -151,6 +155,26 @@ func _ready() -> void:
 			e["rotate_toward_player"],
 			e["detectionradius"]
 		)
+		
+	spawn_timer.wait_time = 3.0
+	spawn_timer.one_shot = false
+	spawn_timer.autostart = false
+	add_child(spawn_timer)
+	spawn_timer.timeout.connect(_auto_spawn_enemy)
+
+func _on_years_invasion_started_signal() -> void:
+	enemy_count = 0
+	_on_spawn_enemy_button_pressed()  # spawn one immediately
+	spawn_timer.start()
+
+func _auto_spawn_enemy() -> void:
+	if enemy_count >= MAX_ENEMIES:
+		spawn_timer.stop()
+		print("Reached 50 enemies — invasion stopped.")
+		return
+
+	_on_spawn_enemy_button_pressed()
+	enemy_count += 1
 
 # --- Button spawn function ---
 func _on_spawn_enemy_button_pressed() -> void:
