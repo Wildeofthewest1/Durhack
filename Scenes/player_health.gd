@@ -77,11 +77,12 @@ func _play_hit_effect() -> void:
 
 	var tween: Tween = create_tween()
 
-	var in_time: float = hit_effect_duration * 0.1
-	var out_time: float = hit_effect_duration * 0.2
+	var in_time: float = hit_effect_duration * 0.01
+	var out_time: float = hit_effect_duration 
 
 	tween.tween_property(hit_effect_sprite, "modulate:a", 1.0, in_time)
-	tween.tween_property(hit_effect_sprite, "modulate:a", 0.0, out_time)
+	tween.tween_property(hit_effect_sprite, "modulate:a", 1.0, out_time)
+	tween.tween_property(hit_effect_sprite, "modulate:a", 0.0, 0.01)
 	tween.finished.connect(Callable(self, "_on_hit_effect_tween_finished"))
 
 func _on_hit_effect_tween_finished() -> void:
@@ -97,8 +98,22 @@ func _start_hit_stop(duration: float) -> void:
 	_do_hit_stop(duration)
 
 func _do_hit_stop(duration: float) -> void:
-	Engine.time_scale = 0.0
+	# Start in deep slow motion (not full freeze, so particles/tweens still move a bit)
+	var min_scale: float = 0.01       # how slow it gets (0.05 = 20x slowdown)
+	var ramp_down_time: float = 0.01  # how fast to enter slow motion
+	var ramp_up_time: float = 0.01    # how long to return to normal speed
+
+	# --- Ramp into slow motion ---
+	var tween_down: Tween = create_tween()
+	tween_down.tween_property(Engine, "time_scale", min_scale, ramp_down_time)
+
+	# --- Stay slowed ---
 	var timer: SceneTreeTimer = get_tree().create_timer(duration, false, true)
 	await timer.timeout
-	Engine.time_scale = 1.0
+
+	# --- Ramp back up ---
+	var tween_up: Tween = create_tween()
+	tween_up.tween_property(Engine, "time_scale", 1.0, ramp_up_time)
+	await tween_up.finished
+
 	_is_hit_stopping = false
