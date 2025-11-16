@@ -16,6 +16,16 @@ class_name PlayerMovement
 @export var fuel_use_rate: float = 20.0
 @export var fuel_recharge_rate: float = 15.0
 @export var fuel_fulluse_recharge: float = 0.05
+# Slower recharge when in full-use lockout
+@export var fuel_recharge_rate_fulluse: float = 10.0
+
+# --- Thrust curve settings ---
+# How strongly thrust power ramps up the longer you hold thrust
+@export var thrust_curve_strength: float = 1.0
+# How fast the “spool” / intensity decays when you stop thrusting
+@export var thrust_curve_decay: float = 1.5
+# Maximum spool value so it does not explode to infinity
+@export var thrust_intensity_max: float = 1.5
 
 # --- Dynamic speed limit settings ---
 @export var extra_speed_limit: float = 20.0
@@ -26,6 +36,7 @@ var player: CharacterBody2D = null
 var fuel: float = 0.0
 var current_speed_limit: float = 0.0
 var was_fully_depleted: bool = false
+var thrust_intensity: float = 0.0  # grows while holding thrust, decays when not
 
 func _ready() -> void:
 	player = get_parent() as CharacterBody2D
@@ -61,10 +72,23 @@ func _physics_process(delta: float) -> void:
 		a_total_local += direction * force
 	# -----------------------------------
 
-	# --- Thrust toward mouse while RMB held, with fuel and depletion lockout ---
+	# --- Thrust / fuel logic ---
 	var is_thrusting: bool = Input.is_action_pressed("thrust_mouse")
 	var applied_thrust: bool = false
 
+	# Update thrust intensity (engine spool)
+	if is_thrusting:
+		thrust_intensity += delta
+	else:
+		thrust_intensity -= thrust_curve_decay * delta
+		if thrust_intensity < 0.0:
+			thrust_intensity = 0.0
+
+	# Clamp intensity
+	if thrust_intensity > thrust_intensity_max:
+		thrust_intensity = thrust_intensity_max
+
+	# How much of the bar must refill before we lift the lockout
 	var recharge_fraction: float = fuel_fulluse_recharge
 	if recharge_fraction < 0.0:
 		recharge_fraction = 0.0
@@ -72,11 +96,16 @@ func _physics_process(delta: float) -> void:
 		recharge_fraction = 1.0
 	var recharge_threshold: float = fuel_max * recharge_fraction
 
-	if was_fully_depleted and fuel >= recharge_threshold:
-		was_fully_depleted = false
-
+	# Can we use thrust this frame?
 	var can_use_thrust: bool = not was_fully_depleted
 
+	# Thrust multiplier: engine gets more powerful as it spools up.
+	# Example: intensity 0 → ×1, intensity = 1.5, strength = 1 → ×(1 + 1*1.5) = ×2.5
+	var thrust_multiplier: float = 1.0 + thrust_curve_strength * thrust_intensity
+	if thrust_multiplier < 1.0:
+		thrust_multiplier = 1.0
+
+	# --- Apply thrust if allowed (normal mode only) ---
 	if is_thrusting and fuel > 0.0 and can_use_thrust:
 		var mouse_world: Vector2 = player.get_global_mouse_position()
 		var to_mouse: Vector2 = mouse_world - player.global_position
@@ -84,23 +113,40 @@ func _physics_process(delta: float) -> void:
 
 		if d > deadzone_px:
 			var thrust_dir: Vector2 = to_mouse / d
-			a_total_local += thrust_dir * thrust_accel
+			# Thrust power scaled by engine spool
+			a_total_local += thrust_dir * thrust_accel * thrust_multiplier
 			applied_thrust = true
 
-		fuel -= fuel_use_rate * delta
+		# Fuel consumption: constant rate, independent of thrust_multiplier
+		var fuel_spent: float = fuel_use_rate * delta
+		fuel -= fuel_spent
 		if fuel < 0.0:
 			fuel = 0.0
 
 		if fuel == 0.0:
+			# Enter lockout: bar must recharge up to threshold
 			was_fully_depleted = true
 	else:
 		applied_thrust = false
 
-	if not is_thrusting:
+	# --- Recharge fuel ---
+	if was_fully_depleted:
+		# FULLUSE RECHARGE PHASE:
+		# Always recharge, even if the player is holding thrust,
+		# but at a slightly slower rate.
+		fuel += fuel_recharge_rate_fulluse * delta
+	elif not is_thrusting:
+		# Normal recharge only when not thrusting.
 		fuel += fuel_recharge_rate * delta
-		if fuel > fuel_max:
-			fuel = fuel_max
 
+	if fuel > fuel_max:
+		fuel = fuel_max
+
+	# Leave lockout once we have enough fuel back
+	if was_fully_depleted and fuel >= recharge_threshold:
+		was_fully_depleted = false
+
+	# --- Thrust particles ---
 	if thrust_particles != null:
 		if applied_thrust:
 			thrust_particles.emitting = true

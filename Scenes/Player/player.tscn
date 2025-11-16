@@ -1,19 +1,20 @@
-[gd_scene load_steps=17 format=3 uid="uid://dcbvpreahnt2f"]
+[gd_scene load_steps=18 format=3 uid="uid://dcbvpreahnt2f"]
 
 [ext_resource type="Script" uid="uid://bsykg4j3q21dw" path="res://Scenes/Player/player.gd" id="1_6t5aa"]
-[ext_resource type="Script" path="res://Scripts/UI/Minimap/minimap_tracked_object.gd" id="1_v0iea"]
+[ext_resource type="Script" uid="uid://b4r0vjwt5v1pe" path="res://Scenes/UI/Minimap/minimap_tracked_object.gd" id="1_v0iea"]
 [ext_resource type="Texture2D" uid="uid://bkdflhjhco4e5" path="res://Assets/player_and_others.png" id="2_cvnsp"]
 [ext_resource type="Script" uid="uid://dhm0acbe0tced" path="res://Scenes/Player/player_movement.gd" id="2_ukyrk"]
 [ext_resource type="Script" uid="uid://dcr8jjiv8yg4s" path="res://Scenes/Player/player_health.gd" id="3_7dp3o"]
 [ext_resource type="Material" uid="uid://cynyba7yprm84" path="res://Shaders/player.tres" id="3_f1ek2"]
 [ext_resource type="PackedScene" uid="uid://iow6shlx8o0w" path="res://Scenes/particles/trail.tscn" id="4_vgqql"]
-[ext_resource type="Script" uid="uid://cqkya5fecy8pk" path="res://Scenes/Weapons/Weapons/weapon_manager.gd" id="5_fkybt"]
+[ext_resource type="Script" uid="uid://cqkya5fecy8pk" path="res://Scenes/Weapons/general/weapon_manager.gd" id="5_fkybt"]
 [ext_resource type="Script" uid="uid://cr4xhgffbxb0j" path="res://Scenes/Player/PlayerInteraction.gd" id="7_3smsa"]
 [ext_resource type="PackedScene" uid="uid://86i1caic40vk" path="res://Scenes/particles/thrust.tscn" id="8_f1ek2"]
 [ext_resource type="Script" uid="uid://brwtwnigrt0y7" path="res://Data/WeaponData.gd" id="9_tx1dd"]
 [ext_resource type="Resource" uid="uid://bi01ro1j5gj7h" path="res://Data/pistol.tres" id="10_gymyn"]
 [ext_resource type="Script" uid="uid://ohf7hfsapmlu" path="res://Scenes/particles/hit_effect.gd" id="12_pu2lt"]
 [ext_resource type="Texture2D" uid="uid://crr37cm1dgssb" path="res://Assets/hit_4.png" id="13_7dp3o"]
+[ext_resource type="Resource" uid="uid://ulqehd0g6ycf" path="res://Data/twin.tres" id="13_dey5f"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3smsa"]
 radius = 100.0
@@ -32,10 +33,18 @@ initial_velocity = Vector2(100, 0)
 [node name="Movement" type="Node2D" parent="." node_paths=PackedStringArray("thrust_particles")]
 rotation = 0.01833335
 script = ExtResource("2_ukyrk")
-thrust_accel = 1000.0
+thrust_accel = 100.0
 max_speed = 300.0
 rotate_with_motion = false
 thrust_particles = NodePath("../thrust")
+fuel_use_rate = 30.0
+fuel_recharge_rate = 50.0
+fuel_fulluse_recharge = 0.1
+thrust_curve_strength = 2.0
+thrust_intensity_max = 3.0
+extra_speed_limit = 300.0
+speed_limit_grow_rate = 30.0
+speed_limit_decay_rate = 40.0
 
 [node name="Health" type="Node2D" parent="." node_paths=PackedStringArray("body_sprite", "hit_effect_sprite")]
 script = ExtResource("3_7dp3o")
@@ -78,7 +87,7 @@ color = Color(1, 1, 1, 1)
 
 [node name="WeaponManager" type="Node2D" parent="."]
 script = ExtResource("5_fkybt")
-starting_loadout = Array[ExtResource("9_tx1dd")]([ExtResource("10_gymyn")])
+starting_loadout = Array[ExtResource("9_tx1dd")]([ExtResource("10_gymyn"), ExtResource("13_dey5f")])
 
 [node name="WeaponSocket" type="Marker2D" parent="WeaponManager"]
 

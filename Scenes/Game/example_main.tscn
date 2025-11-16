@@ -8,8 +8,8 @@
 [ext_resource type="Script" uid="uid://b4r0vjwt5v1pe" path="res://Scenes/UI/Minimap/minimap_tracked_object.gd" id="4_bt0ug"]
 [ext_resource type="Texture2D" uid="uid://bkdflhjhco4e5" path="res://Assets/player_and_others.png" id="5_3xgk6"]
 [ext_resource type="PackedScene" uid="uid://iow6shlx8o0w" path="res://Scenes/particles/trail.tscn" id="6_t3r7j"]
-[ext_resource type="Script" uid="uid://cqkya5fecy8pk" path="res://Scenes/Weapons/Weapons/weapon_manager.gd" id="7_6xkuv"]
-[ext_resource type="Script" uid="uid://n2xgk21a4sl6" path="res://Scenes/Weapons/Weapons/weapon_ui_bridge.gd" id="8_x6b0l"]
+[ext_resource type="Script" uid="uid://cqkya5fecy8pk" path="res://Scenes/Weapons/general/weapon_manager.gd" id="7_6xkuv"]
+[ext_resource type="Script" uid="uid://n2xgk21a4sl6" path="res://Scenes/Weapons/general/weapon_ui_bridge.gd" id="8_x6b0l"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1"]
 size = Vector2(40, 60)

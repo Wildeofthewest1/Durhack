@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://n1jhbwdhyp73"]
+
+[ext_resource type="Script" uid="uid://bmx050jubjr86" path="res://Scenes/Weapons/general/readonly_gravity.gd" id="1_0p72g"]
+[ext_resource type="Script" uid="uid://dpt7dxcr78l7a" path="res://Scenes/Weapons/twin/twin_bullet.gd" id="1_7ial4"]
+[ext_resource type="Texture2D" uid="uid://clkhcvgqdw4ln" path="res://Assets/square.png" id="2_7ial4"]
+[ext_resource type="Script" uid="uid://dje2hi27f2sid" path="res://Scenes/Weapons/general/bullet_trail.gd" id="3_l3gyg"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k5p2k"]
+radius = 2.0
+height = 8.0
+
+[sub_resource type="Gradient" id="Gradient_c15xn"]
+colors = PackedColorArray(1, 1, 1, 0.60784316, 1, 1, 1, 0)
+
+[node name="twin_bullet" type="CharacterBody2D"]
+collision_layer = 0
+collision_mask = 20
+motion_mode = 1
+script = ExtResource("1_7ial4")
+
+[node name="ReadonlyGravity" type="Node2D" parent="."]
+script = ExtResource("1_0p72g")
+gravity_multiplier = 10.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(5, 0)
+scale = Vector2(0.2, 0.1)
+texture = ExtResource("2_7ial4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(5, 0)
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_k5p2k")
+
+[node name="Trail" type="Line2D" parent="."]
+top_level = true
+width = 1.0
+gradient = SubResource("Gradient_c15xn")
+script = ExtResource("3_l3gyg")
+max_points = 10
+min_step_distance = 1.0
