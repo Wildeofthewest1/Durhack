@@ -22,10 +22,11 @@ script = ExtResource("1_wowpa")
 
 [node name="Bodies" type="Node2D" parent="Environment"]
 
-[node name="StarBackground" type="Node2D" parent="Environment"]
+[node name="StarBackground" type="Node2D" parent="Environment" node_paths=PackedStringArray("trackObject")]
 script = ExtResource("2_ldgsr")
 star_colors = Array[Color]([Color(0.26666668, 0.25490198, 0.34901962, 1), Color(0.28235295, 0.27058825, 0.36862746, 1), Color(1, 0.9019608, 0.7019608, 0.39215687), Color(0.40392157, 0.39215687, 0.45882353, 1)])
-stars_per_layer = 10000
+trackObject = NodePath("../../PlayerContainer/Player")
+stars_per_layer = 1000
 spawn_radius = 10000.0
 
 [node name="Systems" type="Node2D" parent="."]
