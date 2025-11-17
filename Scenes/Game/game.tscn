@@ -34,6 +34,7 @@ spawn_radius = 10000.0
 [node name="Other" type="Node2D" parent="."]
 
 [node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.5, 0.5)
 script = ExtResource("2_qxrlw")
 
 [node name="EnemySpawner" type="Node2D" parent="." groups=["EnemySpawner"]]

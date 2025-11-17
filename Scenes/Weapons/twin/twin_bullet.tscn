@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://n1jhbwdhyp73"]
+[gd_scene load_steps=8 format=3 uid="uid://n1jhbwdhyp73"]
 
 [ext_resource type="Script" uid="uid://bmx050jubjr86" path="res://Scenes/Weapons/general/readonly_gravity.gd" id="1_0p72g"]
 [ext_resource type="Script" uid="uid://dpt7dxcr78l7a" path="res://Scenes/Weapons/twin/twin_bullet.gd" id="1_7ial4"]
 [ext_resource type="Texture2D" uid="uid://clkhcvgqdw4ln" path="res://Assets/square.png" id="2_7ial4"]
 [ext_resource type="Script" uid="uid://dje2hi27f2sid" path="res://Scenes/Weapons/general/bullet_trail.gd" id="3_l3gyg"]
+[ext_resource type="Texture2D" uid="uid://ppksnb42mug5" path="res://Assets/Gaussian.png" id="5_l3gyg"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_k5p2k"]
 radius = 2.0
@@ -24,7 +25,7 @@ gravity_multiplier = 10.0
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(5, 0)
-scale = Vector2(0.4, 0.05)
+scale = Vector2(0.5, 0.063)
 texture = ExtResource("2_7ial4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -39,3 +40,9 @@ gradient = SubResource("Gradient_c15xn")
 script = ExtResource("3_l3gyg")
 max_points = 10
 min_step_distance = 1.0
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+modulate = Color(0.95, 0.95, 0.95, 0.39215687)
+position = Vector2(4.999999, 0)
+scale = Vector2(0.12, 0.08)
+texture = ExtResource("5_l3gyg")

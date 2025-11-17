@@ -11,10 +11,10 @@ alternate_start_left = false
 metadata/_edit_lock_ = true
 
 [node name="MuzzleL" type="Marker2D" parent="."]
-position = Vector2(8, -2)
+position = Vector2(8, -3)
 
 [node name="MuzzleR" type="Marker2D" parent="."]
-position = Vector2(8, 2)
+position = Vector2(8, 3)
 
 [node name="Sprite2D3" type="Sprite2D" parent="."]
 visible = false

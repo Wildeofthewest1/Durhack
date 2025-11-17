@@ -39,7 +39,7 @@ thrust_accel = 100.0
 max_speed = 300.0
 rotate_with_motion = false
 thrust_particles = NodePath("../thrust")
-fuel_max = 50.0
+fuel_max = 60.0
 fuel_use_rate = 30.0
 fuel_recharge_rate = 20.0
 fuel_fulluse_recharge = 0.1
@@ -85,7 +85,9 @@ region_rect = Rect2(224, 4, 96, 172)
 [node name="Trail" parent="." instance=ExtResource("4_vgqql")]
 z_index = 4
 material = ExtResource("3_f1ek2")
+width = 2.0
 body_path = NodePath("..")
+width = 2.0
 color = Color(1, 1, 1, 1)
 
 [node name="WeaponManager" type="Node2D" parent="."]
