@@ -48,7 +48,7 @@ func _ready() -> void:
 		cone.connect("body_exited", Callable(self, "_on_cone_body_exited"))
 	else:
 		push_error("❌ Could not find VisionCone at path: " + str(vision_cone_path))
-
+	
 	timer.wait_time = fire_rate
 	timer.connect("timeout", Callable(self, "_on_fire_timer_timeout"))
 	timer.start()
@@ -117,7 +117,7 @@ func _fire_shotgun_blast() -> void:
 	var half_spread := deg_to_rad(spread_angle_deg / 2.0)
 	var spawn_origin: Vector2 = global_position
 	var spawn_rotation: float = global_rotation
-
+	
 	for i in range(pellet_count):
 		var bullet := bullet_scene.instantiate()
 		

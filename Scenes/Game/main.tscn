@@ -76,6 +76,10 @@ pivot_offset = Vector2(150, 35)
 theme_override_font_sizes/font_size = 80
 
 [node name="ThrustUI" parent="CanvasLayer" instance=ExtResource("6_21xkr")]
+anchor_left = 0.35
+anchor_right = 0.65
+offset_top = -40.0
+offset_bottom = -20.0
 
 [node name="HealthUI" parent="CanvasLayer" instance=ExtResource("7_6bp64")]
 

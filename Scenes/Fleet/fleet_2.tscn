@@ -17,6 +17,7 @@ rotation_speed = 20.0
 drone_name = "Mosquito"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.5882353)
 texture_filter = 1
 rotation = 1.5707964
 scale = Vector2(0.1, 0.1)

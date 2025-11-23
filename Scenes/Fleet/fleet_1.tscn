@@ -17,6 +17,7 @@ rotation_speed = 20.0
 drone_name = "Defender"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.5882353)
 texture_filter = 1
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("2_ggydx")

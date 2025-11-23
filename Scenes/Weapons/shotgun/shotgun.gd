@@ -8,13 +8,14 @@ class_name WeaponShotgun
 # Shotgun-specific
 @export var pellets_per_shot: int = 8
 @export var pellet_spread_deg: float = 10.0   # extra spread around base direction
-
+@onready var _audio:= $AudioStreamPlayer2D
 var _muzzle: Node2D
 
 
 func _ready() -> void:
 	super._ready()
 	_muzzle = get_node(muzzle_path) as Node2D
+	_update_aim()
 
 
 func _physics_process(delta: float) -> void:
@@ -45,7 +46,9 @@ func _fire_projectile(dir: Vector2) -> void:
 	if data.bullet_scene == null:
 		push_error("WeaponShotgun: bullet_scene not set in WeaponData")
 		return
-
+	#Knockback
+	get_parent().get_parent().get_parent().global_position += -3*dir.normalized()
+	
 	# base cone from data.spread_deg, extra from pellet_spread_deg
 	var base_half_spread: float = data.spread_deg * 0.5
 	var pellet_half_spread: float = pellet_spread_deg * 0.5
@@ -60,7 +63,8 @@ func _fire_projectile(dir: Vector2) -> void:
 		flash_instance.position = Vector2.ZERO
 		flash_instance.rotation = 0.0
 		flash_instance.scale = Vector2(1.0, 1.0)
-
+	_audio.pitch_scale = 0.9 + randf_range(-0.01,0.01)
+	_audio.play()
 
 func _spawn_pellet(base_dir: Vector2, base_half_spread: float, pellet_half_spread: float) -> void:
 	var world_root: Node = get_parent().get_parent().get_parent().get_parent()
@@ -79,4 +83,4 @@ func _spawn_pellet(base_dir: Vector2, base_half_spread: float, pellet_half_sprea
 	proj.rotation = fire_dir.angle()
 
 	if proj.has_method("initialize_projectile"):
-		proj.call("initialize_projectile", fire_dir, data.muzzle_velocity*randf_range(0.9,1.1), data.damage)
+		proj.call("initialize_projectile", fire_dir, data.muzzle_velocity*randf_range(0.95,1.05), data.damage)

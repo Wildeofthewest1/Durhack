@@ -21,7 +21,7 @@ func _ready() -> void:
 	_muzzle_l = get_node(muzzle_l_path) as Node2D
 	_muzzle_r = get_node(muzzle_r_path) as Node2D
 	_next_left = alternate_start_left
-
+	_update_aim()
 
 func _physics_process(delta: float) -> void:
 	super._physics_process(delta)

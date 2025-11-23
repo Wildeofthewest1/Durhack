@@ -9,9 +9,9 @@ var _muzzle: Node2D
 
 func _ready() -> void:
 	super._ready()
-	
 	_muzzle = get_node(muzzle_path) as Node2D
-
+	_update_aim()
+	
 func _physics_process(delta: float) -> void:
 	super._physics_process(delta)
 	_update_aim()
@@ -42,7 +42,9 @@ func _fire_projectile(dir: Vector2) -> void:
 	var proj: Node2D = data.bullet_scene.instantiate() as Node2D
 	var world_root: Node = get_parent().get_parent().get_parent().get_parent()
 	world_root.add_child(proj)
-
+	
+	#Knockback
+	get_parent().get_parent().get_parent().global_position += -2*dir.normalized()
 	# random spread around the input direction
 	var half_spread: float = data.spread_deg * 0.5
 	var spread_rad: float = deg_to_rad(randf_range(-half_spread, half_spread))

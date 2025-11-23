@@ -39,10 +39,8 @@ thrust_accel = 100.0
 max_speed = 300.0
 rotate_with_motion = false
 thrust_particles = NodePath("../thrust")
-fuel_max = 60.0
-fuel_use_rate = 30.0
-fuel_recharge_rate = 20.0
 fuel_fulluse_recharge = 0.1
+fuel_recharge_rate_fulluse = 5.0
 thrust_curve_strength = 2.0
 thrust_intensity_max = 3.0
 extra_speed_limit = 300.0
@@ -96,7 +94,7 @@ starting_loadout = Array[ExtResource("9_tx1dd")]([ExtResource("10_gymyn"), ExtRe
 
 [node name="WeaponSocket" type="Marker2D" parent="WeaponManager"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." groups=["player"]]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 5
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_f1ek2")
