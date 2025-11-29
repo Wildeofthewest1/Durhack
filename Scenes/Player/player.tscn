@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://dcbvpreahnt2f"]
+[gd_scene load_steps=20 format=3 uid="uid://dcbvpreahnt2f"]
 
 [ext_resource type="Script" uid="uid://bsykg4j3q21dw" path="res://Scenes/Player/player.gd" id="1_6t5aa"]
 [ext_resource type="Script" uid="uid://b4r0vjwt5v1pe" path="res://Scenes/UI/Minimap/minimap_tracked_object.gd" id="1_v0iea"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://iow6shlx8o0w" path="res://Scenes/particles/trail.tscn" id="4_vgqql"]
 [ext_resource type="Script" uid="uid://cqkya5fecy8pk" path="res://Scenes/Weapons/general/weapon_manager.gd" id="5_fkybt"]
 [ext_resource type="Script" uid="uid://cr4xhgffbxb0j" path="res://Scenes/Player/PlayerInteraction.gd" id="7_3smsa"]
+[ext_resource type="Texture2D" uid="uid://ppksnb42mug5" path="res://Assets/Gaussian.png" id="7_ks1b7"]
 [ext_resource type="PackedScene" uid="uid://86i1caic40vk" path="res://Scenes/particles/thrust.tscn" id="8_f1ek2"]
 [ext_resource type="Script" uid="uid://brwtwnigrt0y7" path="res://Data/WeaponData.gd" id="9_tx1dd"]
 [ext_resource type="Resource" uid="uid://bi01ro1j5gj7h" path="res://Data/pistol.tres" id="10_gymyn"]
@@ -69,6 +70,13 @@ rotation = 3.1415927
 [node name="MinimapTracker" type="Node2D" parent="." node_paths=PackedStringArray("target_node")]
 script = ExtResource("1_v0iea")
 target_node = NodePath("..")
+
+[node name="Glow" type="Sprite2D" parent="."]
+self_modulate = Color(0.64, 0.4096, 0.58239996, 0.15686275)
+show_behind_parent = true
+rotation = -1.5707964
+scale = Vector2(0.15, 0.17)
+texture = ExtResource("7_ks1b7")
 
 [node name="Sprite" type="Sprite2D" parent="."]
 z_index = 5
