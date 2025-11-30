@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dcbvpreahnt2f"]
+[gd_scene load_steps=21 format=3 uid="uid://dcbvpreahnt2f"]
 
 [ext_resource type="Script" uid="uid://bsykg4j3q21dw" path="res://Scenes/Player/player.gd" id="1_6t5aa"]
 [ext_resource type="Script" uid="uid://b4r0vjwt5v1pe" path="res://Scenes/UI/Minimap/minimap_tracked_object.gd" id="1_v0iea"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://crr37cm1dgssb" path="res://Assets/hit_4.png" id="13_7dp3o"]
 [ext_resource type="Resource" uid="uid://ulqehd0g6ycf" path="res://Data/twin.tres" id="13_dey5f"]
 [ext_resource type="Resource" uid="uid://cjwnh1iq63xf8" path="res://Data/shotgun.tres" id="14_r5xpd"]
+[ext_resource type="Resource" uid="uid://3u27m1s87iao" path="res://Scenes/Weapons/data/railgun.tres" id="16_hnuln"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3smsa"]
 radius = 100.0
@@ -98,7 +99,7 @@ color = Color(1, 1, 1, 1)
 
 [node name="WeaponManager" type="Node2D" parent="."]
 script = ExtResource("5_fkybt")
-starting_loadout = Array[ExtResource("9_tx1dd")]([ExtResource("10_gymyn"), ExtResource("13_dey5f"), ExtResource("14_r5xpd")])
+starting_loadout = Array[ExtResource("9_tx1dd")]([ExtResource("10_gymyn"), ExtResource("13_dey5f"), ExtResource("14_r5xpd"), ExtResource("16_hnuln")])
 
 [node name="WeaponSocket" type="Marker2D" parent="WeaponManager"]
 

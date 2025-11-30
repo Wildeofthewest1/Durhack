@@ -24,6 +24,9 @@ func _physics_process(delta: float) -> void:
 
 	if Input.is_action_pressed("fire"):
 		_equipped_instance.request_fire()
+	else:
+		if _equipped_instance.has_method("release_fire"):
+			_equipped_instance.release_fire()
 
 	# weapon switching example (1–3)
 	if Input.is_action_just_pressed("weapon_1"):
@@ -32,6 +35,8 @@ func _physics_process(delta: float) -> void:
 		_equip_slot(1)
 	if Input.is_action_just_pressed("weapon_3"):
 		_equip_slot(2)
+	if Input.is_action_just_pressed("weapon_4"):
+		_equip_slot(3)
 
 func _equip_slot(index: int) -> void:
 	if index < 0:

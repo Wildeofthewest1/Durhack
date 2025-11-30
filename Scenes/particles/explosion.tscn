@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bdgd8byi47npg" path="res://Assets/explosion_effect.png" id="1_60hq2"]
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_m7uvj"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_htcqd"]
 particles_animation = true
 particles_anim_h_frames = 5
 particles_anim_v_frames = 1
@@ -23,7 +23,7 @@ anim_speed_max = 10.0
 [node name="explosion" type="GPUParticles2D"]
 z_index = 10
 texture_filter = 1
-material = SubResource("CanvasItemMaterial_m7uvj")
+material = SubResource("CanvasItemMaterial_htcqd")
 position = Vector2(75, -6)
 emitting = false
 amount = 2

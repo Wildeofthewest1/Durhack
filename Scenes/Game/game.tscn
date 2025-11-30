@@ -19,8 +19,8 @@
 shader = ExtResource("4_56qi8")
 shader_parameter/density = 10.0
 shader_parameter/layer_parascale = 5
-shader_parameter/speedx = 1.4901199918426755e-07
-shader_parameter/speedy = 1.4901199918426755e-07
+shader_parameter/speedx = 1.4901199918426758e-07
+shader_parameter/speedy = 1.4901199918426758e-07
 shader_parameter/star_horizontal_wave = 0.3
 shader_parameter/star_size = 3.0
 shader_parameter/twinkle_effect = 0.6
@@ -65,6 +65,7 @@ zoom = Vector2(0.75, 0.75)
 script = ExtResource("2_qxrlw")
 
 [node name="Sprite2D" type="Sprite2D" parent="Camera2D"]
+visible = false
 modulate = Color(1, 1, 1, 0.19607843)
 z_index = -10
 material = SubResource("ShaderMaterial_2vowc")
